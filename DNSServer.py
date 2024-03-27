@@ -58,47 +58,47 @@ def generate_sha256_hash(input_string):
 
 # A dictionary containing DNS records mapping hostnames to different types of DNS data.
 dns_records = {
-    'example.com.': {
-        dns.rdatatype.A: '192.168.1.101',
-        dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
-        dns.rdatatype.MX: [(10, 'mail.example.com.')],  # List of (preference, mail server) tuples
-        dns.rdatatype.CNAME: 'www.example.com.',
-        dns.rdatatype.NS: 'ns.example.com.',
-        dns.rdatatype.TXT: ('This is a TXT record',),
-        dns.rdatatype.SOA: (
-            'ns1.example.com.', #mname
-            'admin.example.com.', #rname
-            2023081401, #serial
-            3600, #refresh
-            1800, #retry
-            604800, #expire
-            86400, #minimum
-        ),
-    'safebank.com.':
-        {
-        dns.rdatatype.A: '192.168.1.102'
-    },
-    'google.com.':
-        {
-        dns.rdatatype.A: '192.168.1.103'
-    },
-    'legitsite.com.':
-        {
-        dns.rdatatype.A: '192.168.1.104'
-    },
-    'yahoo.com.':
-        {
-        dns.rdatatype.A: '192.168.1.105'
-    },
-    'nyu.edu.':
-        {
-        dns.rdatatype.A: '192.168.1.106',
-        dns.rdatatype.TXT: encrypted_value,
-        dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],
-        dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
-        dns.rdatatype.NS: 'ns1.nyu.edu.'
-    },
-}
+        'example.com.': {
+            dns.rdatatype.A: '192.168.1.101',
+            dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+            dns.rdatatype.MX: [(10, 'mail.example.com.')],  # List of (preference, mail server) tuples
+            dns.rdatatype.CNAME: 'www.example.com.',
+            dns.rdatatype.NS: 'ns.example.com.',
+            dns.rdatatype.TXT: ('This is a TXT record',),
+            dns.rdatatype.SOA: (
+                'ns1.example.com.', #mname
+                'admin.example.com.', #rname
+                2023081401, #serial
+                3600, #refresh
+                1800, #retry
+                604800, #expire
+                86400, #minimum
+            ),
+        'safebank.com.':
+            {
+            dns.rdatatype.A: '192.168.1.102'
+        },
+        'google.com.':
+            {
+            dns.rdatatype.A: '192.168.1.103'
+        },
+        'legitsite.com.':
+            {
+            dns.rdatatype.A: '192.168.1.104'
+        },
+        'yahoo.com.':
+            {
+            dns.rdatatype.A: '192.168.1.105'
+        },
+        'nyu.edu.':
+            {
+            dns.rdatatype.A: '192.168.1.106',
+            dns.rdatatype.TXT: encrypted_value,
+            dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],
+            dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
+            dns.rdatatype.NS: 'ns1.nyu.edu.'
+        },
+    }
 }
 
 def run_dns_server():
@@ -113,7 +113,7 @@ def run_dns_server():
             # Parse the request using the `dns.message.from_wire` method
             request = dns.message.from_wire(data)
             # Create a response message using the `dns.message.make_response` method
-            response = request.is_response()
+            response = request.make_response()
 
             # Get the question from the request
             question = request.question[0]
