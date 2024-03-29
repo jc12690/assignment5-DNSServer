@@ -58,7 +58,7 @@ def generate_sha256_hash(input_string):
 
 # A dictionary containing DNS records mapping hostnames to different types of DNS data.
 dns_records = {
-        'example.com': {
+        'example.com.': {
             dns.rdatatype.A: '192.168.1.101',
             dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
             dns.rdatatype.MX: [(10, 'mail.example.com.')],  # List of (preference, mail server) tuples
@@ -74,23 +74,23 @@ dns_records = {
                 604800, #expire
                 86400, #minimum
             ),
-        'safebank.com':
+        'safebank.com.':
             {
             dns.rdatatype.A: '192.168.1.102'
         },
-        'google.com':
+        'google.com.':
             {
             dns.rdatatype.A: '192.168.1.103'
         },
-        'legitsite.com':
+        'legitsite.com.':
             {
             dns.rdatatype.A: '192.168.1.104'
         },
-        'yahoo.com':
+        'yahoo.com.':
             {
             dns.rdatatype.A: '192.168.1.105'
         },
-        'nyu.edu':
+        'nyu.edu.':
             {
             dns.rdatatype.A: '192.168.1.106',
             dns.rdatatype.TXT: encrypted_value,
@@ -104,7 +104,7 @@ dns_records = {
 def run_dns_server():
     # Create a UDP socket and bind it to the local IP address (what unique IP address is used here, similar to webserver lab) and port (the standard port for DNS)
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Research this --> UDP IS SOCK_DGRAM
-    server_socket.bind(('localhost', 53))
+    server_socket.bind(('127.0.0.1', 53))
 
     while True:
         try:
@@ -132,7 +132,7 @@ def run_dns_server():
                         rdata_list.append(MX(dns.rdataclass.IN, dns.rdatatype.MX, pref, server))
                 elif qtype == dns.rdatatype.SOA:
                     mname, rname, serial, refresh, retry, expire, minimum = answer_data # What is the record format? See dns_records dictionary. Assume we handle @, Class, TTL elsewhere. Do some research on SOA Records
-                    rdata = SOA(dns.rdataclass.IN, dns.rdatatype.SOA, dns.rdataclass.IN, dns.rdatatype.SOA, mname, rname, serial, refresh, retry, expire, minimum) # follow format from previous line
+                    rdata = SOA(dns.rdataclass.IN, dns.rdatatype.SOA, mname, rname, serial, refresh, retry, expire, minimum) # follow format from previous line
                     rdata_list.append(rdata)
                 else:
                     if isinstance(answer_data, str):
